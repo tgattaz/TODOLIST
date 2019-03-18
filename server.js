@@ -10,7 +10,7 @@ app.use(bodyParser.urlencoded({'extended':'true'}));
 app.use(bodyParser.json());
 app.use(bodyParser.json({ type: 'application/vnd.api+json' }));
 
-mongoose.connect('mongodb://localhost/ListeaFaire', { useNewUrlParser: true });
+mongoose.connect('mongodb+srv://user:user@cluster0-zt25f.mongodb.net/todolist', { useNewUrlParser: true });
 
 require('./model');
 

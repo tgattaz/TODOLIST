@@ -1,0 +1,40 @@
+<!doctype html>
+
+<html ng-app="ListeaFaire">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Liste Choses à Faire</title>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="index.js"></script>
+</head>
+
+<body ng-controller="mainController">
+    <hr>
+    <h1>La liste des choses à faire</h1>
+    <hr>
+    Nombre d'élements contenus: {{ laliste.length }}
+    <button type="button" class="btn btn-danger mb-2" type="submit" ng-click="deleteAll()">Supprimer tout</button>
+    <br/>
+    <hr>
+    <div id="todo-list">
+        <div ng-repeat="x in laliste">
+            <h5><button type="button" class="btn btn-primary" ng-click="deleteTodo(x._id)"> x </button> {{ x.text }} | Créateur : {{ x.creator }} <button type="button" class="btn btn-success mb-2" type="submit" ng-click="modifyTodo(x._id)">Modifier</button></h5>
+            <label ng-bind="x.date  | date:'dd MMM yyyy à HH:mm'"></label>
+        </div>
+    </div>
+
+    <hr>
+    <form class="form-inline">
+		<div id="todo-form" class="form-group mx-sm-3 mb-2">
+            <input type="text" class="form-control" placeholder="écrire quelque chose" ng-model="formData.text">
+        </div>
+		<div id="todo-form" class="form-group mx-sm-3 mb-2">
+            <input type="creator" class="form-control" placeholder="Nom" ng-model="formData.creator">
+		</div>
+		<button type="button" class="btn btn-success mb-2" type="submit" ng-click="createTodo()">Ajouter</button>
+    </form>
+    <hr>
+</body>
+</html>

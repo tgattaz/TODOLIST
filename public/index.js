@@ -39,26 +39,20 @@ function mainController($scope, $http) {
     };
 
     // delete a todo after checking it
-    $http.delete('/api/laliste/' + id)
-    .success(function(data) {
-        $scope.laliste = data;
-        console.log(data);
-    })
-    .error(function(data) {
-        console.log('Error: ' + data);
-    });
-};
+    $scope.deleteTodo = function(id) {
+        $http.delete('/api/laliste/' + id)
+            .error(function(data) {
+                console.log('Error: ' + data);
+            });
+    };
 
     // delete a todo after checking it
-    $http.deleteAll('/api/laliste/' + id)
-    .success(function(data) {
-        $scope.laliste = data;
-        console.log(data);
-    })
-    .error(function(data) {
-        console.log('Error: ' + data);
-    });
-};
+    $scope.deleteAll = function() {
+        $http.delete('/api/laliste')
+            .error(function(data) {
+                console.log('Error: ' + data);
+            });
+    };
 
     $scope.formatDate = function(date){
         var dateOut = new Date(date);

@@ -20,16 +20,17 @@
     <hr>
     <div id="todo-list">
         <div ng-repeat="x in laliste">
-                <tr ng-repeat="keyword in keywords">
-                        <td ng-switch="mode[$index]">
-                            <input ng-switch-when="edit" id="edit" ng-model="x.text">
-                            <strong ng-switch-default id="x.text">{{ x.text }}</strong>
-                        </td>
-                        <td>
-                            <button ng-click="editx(x.text, $index)">Edit</button>
-                            <button ng-click="deletex(x.text)">Delete</button>
-                        </td>
-                    </tr>
+                <td>
+                        <strong id="keyword.name" ng-if="!editMode">{{ x.text }}</strong>
+                        <span ng-if="editMode">
+                           <input ng-model="keyword.name">
+                           <button ng-click="save(keyword); editMode = false">Save</button>
+                        <span>
+                   </td>
+                   <td>
+                       <button ng-click="editKeyword(keyword); editMode = true">Edit</button>
+                       <button ng-click="deleteKeyword(keyword)">Delete</button>
+                   </td>
             <h5><button type="button" class="btn btn-primary" ng-click="deleteTodo(x._id)"> x </button> <input> {{ x.text }} </input> |  Créateur : <input> {{ x.creator }} </input> <button type="button" class="btn btn-success mb-2" type="submit" ng-click="modifyTodo(x._id)">Modifier</button></h5>
             <label ng-bind="x.date  | date:'dd MMM yyyy à HH:mm'"></label>
         </div>

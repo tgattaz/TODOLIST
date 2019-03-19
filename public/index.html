@@ -29,10 +29,14 @@
     <form class="form-inline">
 		<div id="todo-form" class="form-group mx-sm-3 mb-2">
             Tâche :
+        </div>
+        <div id="todo-form" class="form-group mx-sm-3 mb-2">
             <input type="text" class="form-control" placeholder="écrire quelque chose" ng-model="formData.text">
         </div>
 		<div id="todo-form" class="form-group mx-sm-3 mb-2">
             Crée par :
+        </div>
+        <div id="todo-form" class="form-group mx-sm-3 mb-2">
             <input type="creator" class="form-control" placeholder="Nom" ng-model="formData.creator">
 		</div>
 		<button type="button" class="btn btn-success mb-2" type="submit" ng-click="createTodo()">Ajouter</button>

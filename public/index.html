@@ -20,7 +20,7 @@
     <hr>
     <div id="todo-list">
         <div ng-repeat="x in laliste">
-            <h5><button type="button" class="btn btn-primary" ng-click="deleteTodo(x._id)"> x </button> {{ x.text }} | Créateur : {{ x.creator }} <button type="button" class="btn btn-success mb-2" type="submit" ng-click="modifyTodo(x._id)">Modifier</button></h5>
+            <h5><button type="button" class="btn btn-primary" ng-click="deleteTodo(x._id)"> x </button> <input> {{ x.text }} </input|>  Créateur : <input> {{ x.creator }} </input> <button type="button" class="btn btn-success mb-2" type="submit" ng-click="modifyTodo(x._id)">Modifier</button></h5>
             <label ng-bind="x.date  | date:'dd MMM yyyy à HH:mm'"></label>
         </div>
     </div>
@@ -28,9 +28,11 @@
     <hr>
     <form class="form-inline">
 		<div id="todo-form" class="form-group mx-sm-3 mb-2">
+            Tâche :
             <input type="text" class="form-control" placeholder="écrire quelque chose" ng-model="formData.text">
         </div>
 		<div id="todo-form" class="form-group mx-sm-3 mb-2">
+            Crée par :
             <input type="creator" class="form-control" placeholder="Nom" ng-model="formData.creator">
 		</div>
 		<button type="button" class="btn btn-success mb-2" type="submit" ng-click="createTodo()">Ajouter</button>

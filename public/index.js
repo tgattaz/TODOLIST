@@ -67,4 +67,10 @@ function mainController($scope, $http) {
         return dateOut;
     };
 
+    $scope.editx = function(name, index){
+        $scope.mode[index] = "edit";
+        console.log(name);
+        //something done to change the <strong> element into a text input
+    };
+
 }

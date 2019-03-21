@@ -27,8 +27,21 @@ function mainController($scope, $http) {
             });
     };
 
-    $scope.modifyTodo = function(id) {
-        $http.delete('/api/laliste/' + id)
+    $scope.modifyTodo = function(index, id) {
+        if (document.getElementById('modify-'+index).innerHTML=='Modifier') {
+            document.getElementById('xcreatormodify-'+index).style.display = "block";
+            document.getElementById('xtextmodify-'+index).style.display = "block";
+            document.getElementById('xcreator-'+index).style.display = "none";
+            document.getElementById('xtext-'+index).style.display = "none";
+            document.getElementById('modify-'+index).innerHTML='✔';
+        }
+        else {
+            document.getElementById('xcreatormodify-'+index).style.display = "none";
+            document.getElementById('xtextmodify-'+index).style.display = "none";
+            document.getElementById('xcreator-'+index).style.display = "block";
+            document.getElementById('xtext-'+index).style.display = "block";
+            document.getElementById('modify-'+index).innerHTML='Modifier';
+            $http.post('/api/laliste/' + id)
             .success(function(data) {
                 $scope.laliste = data;
                 console.log(data);
@@ -36,6 +49,7 @@ function mainController($scope, $http) {
             .error(function(data) {
                 console.log('Error: ' + data);
             });
+        };
     };
 
     // delete a todo after checking it

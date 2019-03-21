@@ -1,5 +1,3 @@
-<!doctype html>
-
 <html ng-app="ListeaFaire">
 <head>
     <meta charset="utf-8">
@@ -20,18 +18,46 @@
     <hr>
     <div id="todo-list">
         <div ng-repeat="x in laliste">
-                <td>
-                        <strong id="keyword.name" ng-if="!editMode">{{ x.text }}</strong>
-                        <span ng-if="editMode">
-                           <input ng-model="keyword.name">
-                           <button ng-click="save(keyword); editMode = false">Save</button>
-                        <span>
-                   </td>
-                   <td>
-                       <button ng-click="editKeyword(keyword); editMode = true">Edit</button>
-                       <button ng-click="deleteKeyword(keyword)">Delete</button>
-                   </td>
-            <h5><button type="button" class="btn btn-primary" ng-click="deleteTodo(x._id)"> x </button> <input> {{ x.text }} </input> |  Créateur : <input> {{ x.creator }} </input> <button type="button" class="btn btn-success mb-2" type="submit" ng-click="modifyTodo(x._id)">Modifier</button></h5>
+            <h5>
+                <form class="form-inline">
+                    <div id="delete" class="form-group mx-sm-3 mb-2">
+                        <button type="button" class="btn btn-primary" ng-click="deleteTodo(x._id)"> x </button>
+                    </div>
+                    <div id="xtext" class="form-group mx-sm-3 mb-2">
+                        &nbsp;
+                        N° {{ $index }}
+                        &nbsp;
+                        |
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        À faire :
+                        <div id="xtext-{{$index}}" style="display: block;">
+                        &nbsp;&nbsp;
+                        {{ x.text }}
+                        </div>
+                        &nbsp;
+                    </div>
+                    <div id="xtextmodify-{{$index}}" style="display: none;" class="form-group mx-sm-3 mb-2">
+                        <input type="text" class="form-control" name="text" value="{{x.text}}">
+                    </div>
+                    <div id="xcreator" class="form-group mx-sm-3 mb-2">
+                        |
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        Créateur :
+                        <div id="xcreator-{{$index}}" style="display: block;">
+                        &nbsp;&nbsp;
+                        {{ x.creator }}
+                        </div>
+                        &nbsp;
+                    </div>
+                    <div id="xcreatormodify-{{$index}}" style="display: none;" class="form-group mx-sm-3 mb-2">
+                        <input type="text" class="form-control" name="creator" value="{{x.creator}}">
+                        &nbsp;
+                    </div>
+                    <div id="modify" class="form-group mx-sm-3 mb-2">
+                        <button type="submit" id="modify-{{$index}}" class="btn btn-success mb-2" ng-click="modifyTodo($index, x._id)">Modifier</button>
+                    </div>
+                </form>
+            </h5>
             <label ng-bind="x.date  | date:'dd MMM yyyy à HH:mm'"></label>
         </div>
     </div>

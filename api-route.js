@@ -33,11 +33,11 @@ router.post('/api/laliste', function(req, res) {
 });
 
 router.post('/api/laliste/:liste_id', function(req, res) {
-    console.log('C est le req body :' + req.body.text + 'c est le creator : ' + req.body.creator);
-    Liste.update({
+    Liste.updateOne({
+        _id : req.params.liste_id
+    },{
         text : req.body.text,
         creator : req.body.creator,
-        date: Date.now(),
         done : false
     }, function(err, liste) {
         if (err)

@@ -13,6 +13,7 @@
     <h1>La liste des choses à faire</h1>
     <hr>
     Nombre d'élements contenus: {{ laliste.length }}
+    &nbsp;&nbsp;&nbsp;&nbsp;
     <button type="button" class="btn btn-danger mb-2" type="submit" ng-click="deleteAll()">Supprimer tout</button>
     <br/>
     <hr>
@@ -25,7 +26,7 @@
                     </div>
                     <div id="xtext" class="form-group mx-sm-3 mb-2">
                         &nbsp;
-                        N° {{ $index }}
+                        N° {{ $index+1 }}
                         &nbsp;
                         |
                         &nbsp;&nbsp;&nbsp;&nbsp;
@@ -37,7 +38,7 @@
                         &nbsp;
                     </div>
                     <div id="xtextmodify-{{$index}}" style="display: none;" class="form-group mx-sm-3 mb-2">
-                        <input type="text" class="form-control" name="text" value="{{x.text}}">
+                        <input type="text" class="form-control" name="text" ng-model="modifyData.text">
                     </div>
                     <div id="xcreator" class="form-group mx-sm-3 mb-2">
                         |
@@ -50,11 +51,11 @@
                         &nbsp;
                     </div>
                     <div id="xcreatormodify-{{$index}}" style="display: none;" class="form-group mx-sm-3 mb-2">
-                        <input type="text" class="form-control" name="creator" value="{{x.creator}}">
+                        <input type="text" class="form-control" name="creator" ng-model="modifyData.creator">
                         &nbsp;
                     </div>
                     <div id="modify" class="form-group mx-sm-3 mb-2">
-                        <button type="submit" id="modify-{{$index}}" class="btn btn-success mb-2" ng-click="modifyTodo($index, x._id)">Modifier</button>
+                        <button type="submit" id="modify-{{$index}}" class="btn btn-success mb-2" ng-click="modifyTodo($index, x)">Modifier</button>
                     </div>
                 </form>
             </h5>

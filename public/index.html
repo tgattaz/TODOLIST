@@ -8,60 +8,52 @@
     <script src="index.js"></script>
 </head>
 
-<body ng-controller="mainController">
+<body ng-controller="mainController" style="margin:50;padding:5">
+    <center>
     <hr>
     <h1>La liste des choses à faire</h1>
+    {{$scope.checked}}
     <hr>
     Nombre d'élements contenus: {{ laliste.length }}
     &nbsp;&nbsp;&nbsp;&nbsp;
-    <button type="button" class="btn btn-danger mb-2" type="submit" ng-click="deleteAll()">Supprimer tout</button>
+    <button type="button" class="btn btn-danger mb-2" type="submit" ng-click="deleteAll()">Supprimer les tâches faites</button>
     <br/>
     <hr>
-    <div id="todo-list">
-        <div ng-repeat="x in laliste">
-            <h5>
-                <form class="form-inline">
-                    <div id="delete" class="form-group mx-sm-3 mb-2">
-                        <button type="button" class="btn btn-primary" ng-click="deleteTodo(x._id)"> x </button>
-                    </div>
-                    <div id="xtext" class="form-group mx-sm-3 mb-2">
-                        &nbsp;
-                        N° {{ $index+1 }}
-                        &nbsp;
-                        |
-                        &nbsp;&nbsp;&nbsp;&nbsp;
-                        À faire :
-                        <div id="xtext-{{$index}}" style="display: block;">
-                        &nbsp;&nbsp;
-                        {{ x.text }}
-                        </div>
-                        &nbsp;
+    <table class="table table-bordered" id="todo-list">
+        <thead class="thead-dark">
+            <tr>
+            <th scope="col"> # </th>
+            <th scope="col">Fait :</th>
+            <th scope="col">Tâche :</th>
+            <th scope="col">De :</th>
+            <th scope="col">Date :</th>
+            <th scope="col">Modifier</th>
+            <th scope="col">Supprimer</th>
+            </tr>
+        </thead>
+        <tr div ng-repeat="x in laliste" ng-style="x.done && { 'background-color' : 'lightblue' }">
+                <th scope="col"> N° {{ $index+1 }} </th>
+                <th scope="col"><input type="checkbox" id="done-{{$index}}" ng-checked="x.done" ng-click="isChecked($index, x)"></th>
+                <th scope="col">
+                    <div id="xtext-{{$index}}" style="display: block;" ng-dblclick="!x.done && modifyTodo($index, x)" ng-style="x.done && { 'text-decoration' : 'line-through' }">
+                    {{ x.text }}
                     </div>
                     <div id="xtextmodify-{{$index}}" style="display: none;" class="form-group mx-sm-3 mb-2">
-                        <input type="text" class="form-control" name="text" ng-model="modifyData.text">
+                    <input type="text" class="form-control" name="text" ng-model="modifyData.text">
                     </div>
-                    <div id="xcreator" class="form-group mx-sm-3 mb-2">
-                        |
-                        &nbsp;&nbsp;&nbsp;&nbsp;
-                        Créateur :
-                        <div id="xcreator-{{$index}}" style="display: block;">
-                        &nbsp;&nbsp;
-                        {{ x.creator }}
-                        </div>
-                        &nbsp;
+                </th>
+                <th scope="col">
+                    <div id="xcreator-{{$index}}" style="display: block;" ng-dblclick="!x.done && modifyTodo($index, x)" ng-style="x.done && { 'text-decoration' : 'line-through' }">
+                    {{ x.creator }}
                     </div>
                     <div id="xcreatormodify-{{$index}}" style="display: none;" class="form-group mx-sm-3 mb-2">
-                        <input type="text" class="form-control" name="creator" ng-model="modifyData.creator">
-                        &nbsp;
+                    <input type="text" class="form-control" name="creator" ng-model="modifyData.creator">
                     </div>
-                    <div id="modify" class="form-group mx-sm-3 mb-2">
-                        <button type="submit" id="modify-{{$index}}" class="btn btn-success mb-2" ng-click="modifyTodo($index, x)">Modifier</button>
-                    </div>
-                </form>
-            </h5>
-            <label ng-bind="x.date  | date:'dd MMM yyyy à HH:mm'"></label>
-        </div>
-    </div>
+                </th>
+                <th scope="col"><label ng-bind="x.date  | date:'dd MMM yyyy à HH:mm'"></label></th>
+                <th scope="col"><button type="submit" id="modify-{{$index}}" class="btn btn-success mb-2" ng-click="modifyTodo($index, x)" ng-disabled="x.done">Modifier</button></th>
+                <th scope="col"><button type="button" id="delete-{{$index}}"" class="btn btn-danger" ng-click="deleteTodo(x._id)"> x </button></th>
+    </table>
 
     <hr>
     <form class="form-inline">
@@ -80,5 +72,6 @@
 		<button type="button" class="btn btn-success mb-2" type="submit" ng-click="createTodo()">Ajouter</button>
     </form>
     <hr>
+</center>
 </body>
 </html>

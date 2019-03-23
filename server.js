@@ -4,8 +4,8 @@ var mongoose = require('mongoose');
 var morgan = require('morgan');
 var bodyParser = require('body-parser');
 
-//mongoose.connect('mongodb+srv://user:user@cluster0-zt25f.mongodb.net/todolist', { useNewUrlParser: true });
-mongoose.connect('mongodb://localhost/todo', { useNewUrlParser: true });
+mongoose.connect('mongodb+srv://user:user@cluster0-zt25f.mongodb.net/todolist', { useNewUrlParser: true });
+//mongoose.connect('mongodb://localhost/todo', { useNewUrlParser: true });
 
 require('./models/Todolist');
 

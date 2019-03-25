@@ -4,9 +4,6 @@ var mongoose = require('mongoose');
 var morgan = require('morgan');
 var bodyParser = require('body-parser');
 
-mongoose.connect('mongodb+srv://user:user@cluster0-zt25f.mongodb.net/todolist', { useNewUrlParser: true });
-//mongoose.connect('mongodb://localhost/todo', { useNewUrlParser: true });
-
 Todolist = require('./models/Todolist');
 User = require('./models/User');
 
@@ -22,6 +19,18 @@ app.use('/views', express.static(__dirname + '/views'));
 
 app.use('/todolists', require('./routes/todolists'));
 app.use('/', require('./routes/users'));
+
+
+mongoose.connect('mongodb+srv://user:user@cluster0-zt25f.mongodb.net/todolist', { useNewUrlParser: true });
+//mongoose.connect('mongodb://localhost/todo', { useNewUrlParser: true });
+//Start the applicatio, when database connection is ready
+// dataLayer.init(function(){
+
+//   console.log('init');
+//   app.listen(3000);
+//   console.log("Listening on port 3000");
+// })
+
 
 nunjucks.configure('views', {
   autoescape: true,

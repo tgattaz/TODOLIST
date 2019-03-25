@@ -34,36 +34,41 @@ router.post('/newUser', function(req, res) {
 });
 
 router.post('/connectUser', function(req, res) {
-  var coUser = new User({
-    username : req.body.username,
-    password : req.body.password
-  });
 
     // attempt to authenticate user
-  User.getAuthenticated('jmar777', 'Password123', function(err, user, reason) {
-    if (err) throw err;
+  User.getAuthenticated(req.body.username, req.body.password, function(err, user, reason) {
+    if (err)
+      res.send(err);
 
-    // login was successful if we have a user
-    if (user) {
-        // handle login success
-        console.log('login success');
-        return;
-    }
 
-    // otherwise we can determine why we failed
-    var reasons = User.failedLogin;
-    switch (reason) {
-        case reasons.NOT_FOUND:
-        case reasons.PASSWORD_INCORRECT:
-            // note: these cases are usually treated the same - don't tell
-            // the user *why* the login failed, only that it did
-            break;
-        case reasons.MAX_ATTEMPTS:
-            // send email or otherwise notify user that account is
-            // temporarily locked
-            break;
-    }
-  });
+        // login was successful if we have a user
+        if (user) {
+            // handle login success
+            res.send('Connexion avec succès');
+            return;
+        }
+
+        // otherwise we can determine why we failed
+        var reasons = User.failedLogin;
+        switch (reason) {
+            case reasons.NOT_FOUND:
+              res.send('Utilisateur non trouvé');
+              return;
+            case reasons.PASSWORD_INCORRECT:
+              res.send('Mot de passe incorrect');
+              return;
+                // note: these cases are usually treated the same - don't tell
+                // the user *why* the login failed, only that it did
+                break;
+            case reasons.MAX_ATTEMPTS:
+              res.send("Tu as atteints la limite d'essais de connexion");
+              return;
+                // send email or otherwise notify user that account is
+                // temporarily locked
+                break;
+        }
+    });
+});
 
 
 

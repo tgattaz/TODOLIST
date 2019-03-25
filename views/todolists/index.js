@@ -6,7 +6,7 @@ function mainController($scope, $http) {
     $scope.doneData = {};
 
     // when landing on the page, get all todos and show them
-    $http.get('/api/laliste')
+    $http.get('todolists/api/laliste')
         .success(function(data) {
             $scope.laliste = data;
             console.log(data);
@@ -17,7 +17,7 @@ function mainController($scope, $http) {
 
     // when submitting the add form, send the text to the node API
     $scope.createTodo = function() {
-        $http.post('/api/laliste', $scope.formData)
+        $http.post('todolists/api/laliste', $scope.formData)
             .success(function(data) {
                 $scope.formData = {}; // clear the form so our user is ready to enter another
                 $scope.laliste = data;
@@ -57,7 +57,7 @@ function mainController($scope, $http) {
             document.getElementById('done-'+index).disabled =false;
             document.getElementById('delete-'+index).disabled =false;
             document.getElementById('modify-'+index).innerHTML='Modifier';
-            $http.post('/api/laliste/' + x._id, $scope.modifyData)
+            $http.post('todolists/api/laliste/' + x._id, $scope.modifyData)
             .success(function(data) {
                 $scope.laliste = data;
                 console.log(data);
@@ -70,7 +70,7 @@ function mainController($scope, $http) {
 
     $scope.isChecked = function(index, x) {
         $scope.modifyData.checked = document.getElementById('done-'+index).checked;
-        $http.post('/api/laliste/done/' + x._id, $scope.modifyData)
+        $http.post('todolists/api/laliste/done/' + x._id, $scope.modifyData)
         .success(function(data) {
             $scope.laliste = data;
             console.log(data);
@@ -82,7 +82,7 @@ function mainController($scope, $http) {
 
     // delete a todo after checking it
     $scope.deleteTodo = function(id) {
-        $http.delete('/api/laliste/' + id)
+        $http.delete('todolists/api/laliste/' + id)
         .success(function(data) {
             $scope.laliste = data;
             console.log(data);
@@ -94,7 +94,7 @@ function mainController($scope, $http) {
 
     // delete a todo after checking it
     $scope.deleteAll = function() {
-        $http.delete('/api/laliste/')
+        $http.delete('todolists/api/laliste/')
         .success(function(data) {
             $scope.laliste = data;
             console.log(data);

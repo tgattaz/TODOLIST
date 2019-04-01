@@ -76,13 +76,15 @@
         <div id="todo-form" class="form-group mx-sm-3 mb-2">
             <input type="text" class="form-control" placeholder="écrire quelque chose" ng-model="formData.text">
         </div>
-		<div id="todo-form" class="form-group mx-sm-3 mb-2">
-            Crée par :
+        <div id="change-name-div" class="form-group mx-sm-3 mb-2" style="display: none;">
+            <div id="todo-form">
+                Crée par :
+                <input type="creator" class="form-control" placeholder="Nom" ng-model="formData.creator">
+            </div>
         </div>
-        <div id="todo-form" class="form-group mx-sm-3 mb-2">
-            <input type="creator" class="form-control" placeholder="Nom" ng-model="formData.creator">
-		</div>
-		<button type="button" class="btn btn-success mb-2" type="submit" ng-click="createTodo()">Ajouter</button>
+        <button type="button" id="change-name" class="btn btn-secondary mb-2" ng-click="persoNom()">+Nom</button>
+        &nbsp&nbsp
+		<button type="submit" class="btn btn-success mb-2" ng-click="createTodo()">Ajouter</button>
     </form>
     {% endraw %}
 </center>

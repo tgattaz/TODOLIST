@@ -4,7 +4,9 @@ function mainController($scope, $http, $location) {
 
     var url = $location.search().list;
     // $scope.url = $location.search().list;
+    var cookie_username = getCookie('username');
     $scope.formData = {};
+    $scope.formData.creator = cookie_username;
     $scope.modifyData = {};
     $scope.listData = {};
     $scope.doneData = {};
@@ -138,9 +140,38 @@ function mainController($scope, $http, $location) {
         });
     };
 
+    $scope.persoNom = function() {
+        if (document.getElementById('change-name').innerHTML=='+Nom') {
+            $scope.formData.creator = "";
+            document.getElementById('change-name-div').style.display = "block";
+            document.getElementById('change-name').innerHTML='⌫';
+        }
+        else {
+            $scope.formData.creator = cookie_username;
+            document.getElementById('change-name-div').style.display = "none";
+            document.getElementById('change-name').innerHTML='+Nom';
+        };
+    };
+
     $scope.formatDate = function(date){
         var dateOut = new Date(date);
         return dateOut;
     };
 
 }
+
+function getCookie(cname) {
+    var name = cname + "=";
+    var decodedCookie = decodeURIComponent(document.cookie);
+    var ca = decodedCookie.split(';');
+    for(var i = 0; i <ca.length; i++) {
+      var c = ca[i];
+      while (c.charAt(0) == ' ') {
+        c = c.substring(1);
+      }
+      if (c.indexOf(name) == 0) {
+        return c.substring(name.length, c.length);
+      }
+    }
+    return "";
+  }

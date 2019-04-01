@@ -56,12 +56,12 @@ function mainController($scope, $http, $location) {
   $scope.createCollab = function() {
     $http.post('collabList', $scope.collabData)
       .success(function(result) {
-        if (result=='true'){
-          document.getElementById('result').color='green';
-          document.getElementById('result').innerHTML="Collaboration créee avec "+$scope.collabData.name+".";
-        } else {
+        if (result=='false'){
           document.getElementById('result').color='red';
           document.getElementById('result').innerHTML="Collaboration échouée, pas d'utilisateur "+$scope.collabData.name+" trouvé.";
+        } else {
+          document.getElementById('result').color='green';
+          document.getElementById('result').innerHTML="Collaboration créee avec "+$scope.collabData.name+".";
         }
       })
       .error(function(data) {

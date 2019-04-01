@@ -97,11 +97,8 @@ var dataLayer = {
   },
   createCollab: function(data,cb){
     User.findOne({ username: data.name }).then(user=> {
-      if(user==null){
-        cb(false);
-      } else {
-        User.findByIdAndUpdate(user._id, {$push: {listes: data.list_id}}, cb(true));
-      }
+        if(user==null) cb(false);
+        User.findByIdAndUpdate(user._id, {$push: {listes: data.list_id}}, {'new':true}, cb);
     });
   },
   createUser : function(data,cb) {

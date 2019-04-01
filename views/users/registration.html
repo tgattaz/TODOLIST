@@ -15,7 +15,7 @@
   {% raw %}
   <h1>Inscription à votre e-todolist</h1>
   <hr>
-  <form class="form-inline">
+  <form id="formInscr" class="form-inline">
     <table class="table table-bordered" id="todo-list">
       <thead class="thead-dark">
         <tr>
@@ -27,19 +27,23 @@
       </thead>
       <tr>
       <th scope="col">
-        <input type="text" class="form-control" placeholder="Nom d'utilisateur" ng-model="insData.username">
+        <input type="text" id="nom" class="form-control" placeholder="Nom d'utilisateur" ng-model="insData.username" required>
+        <span id="aidenom"></span>
       </th>
       <th scope="col">
-        <input type="text" class="form-control" placeholder="Mot de passe" ng-model="insData.password">
+        <input type="password" id="pass1" class="form-control" placeholder="Mot de passe" ng-model="insData.password" required>
+        <span id="aidemdp"></span>
       </th>
       <th scope="col">
-          <input type="text" class="form-control" placeholder="Mot de passe" ng-model="insData.passwordconf">
+          <input type="password" id="pass2" class="form-control" placeholder="Mot de passe" ng-model="insData.passwordconf" required>
+          <span id="aidemdp2"></span>
       </th>
       <th scope="col">
         <button type="button" class="btn btn-success mb-2" type="submit" ng-click="createUser()">S'incrire</button>
       </th>
       </tr>
     </table>
+    <font id="warning" color="red"></font>
   </form>
   </center>
   {% endraw %}

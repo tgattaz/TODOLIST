@@ -1,15 +1,20 @@
 var ListeaFaire = angular.module('ListeaFaire', []);
 
-function mainController($scope, $http) {
+function mainController($scope, $http, $location) {
+
+    var url = $location.search().list;
+    // $scope.url = $location.search().list;
     $scope.formData = {};
     $scope.modifyData = {};
+    $scope.listData = {};
     $scope.doneData = {};
+    $scope.laliste = {};
 
     // when landing on the page, get all todos and show them
-    $http.get('todolists/api/laliste')
-        .success(function(data) {
-            $scope.laliste = data;
-            console.log(data);
+    $http.get('api/laliste/'+url)
+        .success(function(res) {
+            $scope.laliste = res;
+            console.log($scope.laliste);
         })
         .error(function(data) {
             console.log('Error: ' + data);
@@ -17,7 +22,7 @@ function mainController($scope, $http) {
 
     // when submitting the add form, send the text to the node API
     $scope.createTodo = function() {
-        $http.post('todolists/api/laliste', $scope.formData)
+        $http.post('api/laliste/'+url, $scope.formData)
             .success(function(data) {
                 $scope.formData = {}; // clear the form so our user is ready to enter another
                 $scope.laliste = data;
@@ -26,6 +31,35 @@ function mainController($scope, $http) {
             .error(function(data) {
                 console.log('Error: ' + data);
             });
+    };
+
+    $scope.editList = function() {
+        if (document.getElementById('modify-list').innerHTML=='Modifier') {
+            $scope.listData.name = $scope.laliste.name;
+            $scope.listData.description = $scope.laliste.description;
+            document.getElementById('listname').style.display = "none";
+            document.getElementById('listname_modify').style.display = "block";
+            document.getElementById('listdesc').style.display = "none";
+            document.getElementById('listdesc_modify').style.display = "block";
+            document.getElementById('delete-list').disabled =true;
+            document.getElementById('modify-list').innerHTML='✔';
+        }
+        else {
+            document.getElementById('listname').style.display = "block";
+            document.getElementById('listname_modify').style.display = "none";
+            document.getElementById('listdesc').style.display = "block";
+            document.getElementById('listdesc_modify').style.display = "none";
+            document.getElementById('delete-list').disabled =false;
+            document.getElementById('modify-list').innerHTML='Modifier';
+            $http.post('api/laliste/edit/'+url, $scope.listData)
+            .success(function(data) {
+                $scope.laliste = data;
+                console.log(data);
+            })
+            .error(function(data) {
+                console.log('Error: ' + data);
+            });
+        };
     };
 
     $scope.modifyTodo = function(index, x) {
@@ -57,7 +91,7 @@ function mainController($scope, $http) {
             document.getElementById('done-'+index).disabled =false;
             document.getElementById('delete-'+index).disabled =false;
             document.getElementById('modify-'+index).innerHTML='Modifier';
-            $http.post('todolists/api/laliste/' + x._id, $scope.modifyData)
+            $http.post('api/laliste/'+url+'/'+ x._id, $scope.modifyData)
             .success(function(data) {
                 $scope.laliste = data;
                 console.log(data);
@@ -70,7 +104,7 @@ function mainController($scope, $http) {
 
     $scope.isChecked = function(index, x) {
         $scope.modifyData.checked = document.getElementById('done-'+index).checked;
-        $http.post('todolists/api/laliste/done/' + x._id, $scope.modifyData)
+        $http.post('api/laliste/done/' + url + '/' + x._id, $scope.modifyData)
         .success(function(data) {
             $scope.laliste = data;
             console.log(data);
@@ -80,9 +114,19 @@ function mainController($scope, $http) {
         });
     };
 
+    $scope.deleteList = function() {
+        $http.delete('api/laliste/delete/'+url)
+        .success(function(data) {
+            history.back();
+        })
+        .error(function(data) {
+            console.log('Error: ' + data);
+        });
+    };
+
     // delete a todo after checking it
     $scope.deleteTodo = function(id) {
-        $http.delete('todolists/api/laliste/' + id)
+        $http.delete('api/laliste/' + url + '/' + id)
         .success(function(data) {
             $scope.laliste = data;
             console.log(data);
@@ -94,7 +138,7 @@ function mainController($scope, $http) {
 
     // delete a todo after checking it
     $scope.deleteAll = function() {
-        $http.delete('todolists/api/laliste/')
+        $http.delete('api/laliste/'+ url)
         .success(function(data) {
             $scope.laliste = data;
             console.log(data);
@@ -108,6 +152,5 @@ function mainController($scope, $http) {
         var dateOut = new Date(date);
         return dateOut;
     };
-
 
 }

@@ -1,10 +1,18 @@
-var mongoose = require('mongoose');
+var mongoose = require('mongoose'),
+Schema = mongoose.Schema;
 
-var Liste = mongoose.model('Liste', {
-  text : String,
-  date : String,
+var TodolistSchema = new Schema({
+  name : String,
+  description : String,
   creator : String,
-  done : Boolean
+  tasks: [
+    {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Task'
+    }
+  ]
 });
 
-module.exports = Liste;
+var Todolist = mongoose.model('Liste', TodolistSchema);
+
+module.exports = Todolist;

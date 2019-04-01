@@ -1,96 +1,93 @@
 var router = require('express').Router();
-
-var Liste = require('../models/Todolist');
+var dataLayer = require('../dataLayer');
 
 router.get('/', function(req, res) {
   res.render('todolists/index.html');
 });
 
-
-router.get('/api/laliste', function(req, res) {
-  Liste.find(function(err, laliste) {
-      if (err)
-          res.send(err)
-      res.json(laliste);
+router.get('/#?list=:id', function(req, res) {
+    res.render('todolists/index.html');
   });
+
+router.get('/api/laliste/:id', function(req, res) {
+    param = req.params;
+    dataLayer.getList(param,function(result){
+      res.send(result);
+    });
 });
 
-router.post('/api/laliste', function(req, res) {
-  Liste.create({
-      text : req.body.text,
-      creator : req.body.creator,
-      date: Date.now(),
-      done : false
-  }, function(err, liste) {
-      if (err)
-          res.send(err);
-      Liste.find(function(err, laliste) {
-          if (err)
-              res.send(err)
-          res.json(laliste);
-      });
-  });
-});
 
-router.post('/api/laliste/:liste_id', function(req, res) {
-        Liste.updateOne({
-            _id : req.params.liste_id
-        },{
-            text : req.body.text,
-            creator : req.body.creator
-        }, function(err, liste) {
-            if (err)
-                res.send(err);
-            Liste.find(function(err, laliste) {
-                if (err)
-                    res.send(err)
-                res.json(laliste);
-            });
+router.post('/api/laliste/:id', function(req, res) {
+    data = req.body;
+    param = req.params;
+    dataLayer.insertTask(param,data,function(){
+        dataLayer.getList(param,function(result){
+            res.send(result);
         });
     });
+});
 
-    router.post('/api/laliste/done/:liste_id', function(req, res) {
-        Liste.updateOne({
-            _id : req.params.liste_id
-        },{
-            done : req.body.checked
-        }, function(err, liste) {
-            if (err)
-                res.send(err);
-            Liste.find(function(err, laliste) {
-                if (err)
-                    res.send(err)
-                res.json(laliste);
-            });
-        });
-  });
+router.post('/api/laliste/create/:id', function(req, res) {
+    data = req.body;
+    param = req.params;
+    dataLayer.createList(param,data,function(result){res.send(result)});
+});
 
-router.delete('/api/laliste', function(req, res) {
-    Liste.deleteMany({
-        done : true
-    }, function(err, liste) {
-        if (err)
-            res.send(err);
-        Liste.find(function(err, laliste) {
-            if (err)
-                res.send(err)
-            res.json(laliste);
+router.post('/api/laliste/edit/:id', function(req, res) {
+    data = req.body;
+    param = req.params;
+    dataLayer.editList(param,data,function(){
+        dataLayer.getList(param,function(result){
+            res.send(result);
         });
     });
-  });
-
-router.delete('/api/laliste/:liste_id', function(req, res) {
-  Liste.deleteOne({
-      _id : req.params.liste_id
-  }, function(err, liste) {
-      if (err)
-          res.send(err);
-      Liste.find(function(err, laliste) {
-          if (err)
-              res.send(err)
-          res.json(laliste);
-      });
-  });
 });
+
+router.delete('/api/laliste/delete/:id', function(req, res) {
+    param = req.params;
+    console.log(param);
+    dataLayer.deleteList(param,function(result){
+        res.send(result);
+    });
+});
+
+router.post('/api/laliste/:id/:task_id', function(req, res) {
+    data = req.body;
+    param = req.params;
+    dataLayer.updateTask(param,data,function(){
+        dataLayer.getList(param,function(result){
+            res.send(result);
+        });
+    });
+});
+
+router.post('/api/laliste/done/:id/:task_id', function(req, res) {
+    data = req.body;
+    param = req.params;
+    dataLayer.updateDone(param,data,function(){
+        dataLayer.getList(param,function(result){
+            res.send(result);
+        });
+    });
+});
+
+router.delete('/api/laliste/:id', function(req, res) {
+    dataLayer.deleteDone(function(){
+        dataLayer.getList(param,function(result){
+            res.send(result);
+        });
+    });
+});
+
+router.delete('/api/laliste/:id/:task_id', function(req, res) {
+    param = req.params;
+    dataLayer.delete(param,function(){
+        dataLayer.getList(param,function(result){
+            res.send(result);
+        });
+    });
+});
+
+
 
 module.exports = router;

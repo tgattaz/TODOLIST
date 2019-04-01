@@ -2,26 +2,26 @@ var Connexion = angular.module('Connexion', []);
 
 function mainController($scope, $http) {
   $scope.coData = {};
+  $scope.result = {};
   $scope.response = {};
 
   $scope.connectUser = function() {
     $http.post('/connectUser', $scope.coData)
         .success(function(data) {
-            $scope.coData = {}; // clear the form so our user is ready to enter another
-            $scope.response.text = data + ', redirection sur votre espace ...';
-            if (data == 'Connexion avec succès'){
+            $scope.response.text = data;
+            if (data!="Utilisateur non trouvé ou mot de passe incorrect" && data!="Tu as atteints la limite d'essais de connexion"){
+                $scope.response.text = 'Bonjour ' + $scope.coData.username + ' ! Redirection sur votre espace en cours ...';
+                $scope.coData = {};
                 $scope.response.color = 'green';
+                setTimeout(function(){
+                    window.location.replace('/'+data.replace(/^"(.*)"$/, '$1'));
+                }, 2000);
             } else {
                 $scope.response.color = 'red';
             };
-            setTimeout(function(){
-                window.location.replace("/todolists");
-            }, 2000);
         })
         .error(function(data) {
             console.log('Error: ' + data);
         });
 };
-
-
 }

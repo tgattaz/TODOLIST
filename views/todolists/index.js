@@ -34,14 +34,14 @@ function mainController($scope, $http, $location) {
     };
 
     $scope.editList = function() {
-        if (document.getElementById('modify-list').innerHTML=='Modifier') {
+        if (document.getElementById('modify-list').innerHTML=='Modifier la liste') {
             $scope.listData.name = $scope.laliste.name;
             $scope.listData.description = $scope.laliste.description;
             document.getElementById('listname').style.display = "none";
             document.getElementById('listname_modify').style.display = "block";
             document.getElementById('listdesc').style.display = "none";
             document.getElementById('listdesc_modify').style.display = "block";
-            document.getElementById('delete-list').disabled =true;
+            //document.getElementById('delete-list').disabled =true;
             document.getElementById('modify-list').innerHTML='✔';
         }
         else {
@@ -49,7 +49,7 @@ function mainController($scope, $http, $location) {
             document.getElementById('listname_modify').style.display = "none";
             document.getElementById('listdesc').style.display = "block";
             document.getElementById('listdesc_modify').style.display = "none";
-            document.getElementById('delete-list').disabled =false;
+            //document.getElementById('delete-list').disabled =false;
             document.getElementById('modify-list').innerHTML='Modifier';
             $http.post('api/laliste/edit/'+url, $scope.listData)
             .success(function(data) {
@@ -108,16 +108,6 @@ function mainController($scope, $http, $location) {
         .success(function(data) {
             $scope.laliste = data;
             console.log(data);
-        })
-        .error(function(data) {
-            console.log('Error: ' + data);
-        });
-    };
-
-    $scope.deleteList = function() {
-        $http.delete('api/laliste/delete/'+url)
-        .success(function(data) {
-            history.back();
         })
         .error(function(data) {
             console.log('Error: ' + data);

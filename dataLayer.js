@@ -63,12 +63,13 @@ var dataLayer = {
   });
   },
   delete : function(param,cb) {
+  console.log(param);
   Task.deleteOne({
     _id : param.task_id
   }, function(err) {
     if (err)
         cb(err);
-    cb();
+    Todolist.findByIdAndUpdate(param.id, {$pull: {tasks: param.task_id}}, {'new':false}, cb);
   });
   },
   getMySpace: function(param,cb) {
@@ -91,7 +92,17 @@ var dataLayer = {
     Todolist.findByIdAndUpdate(param.id, {name: data.name, description: data.description}, cb);
   },
   deleteList: function(param,cb) {
-    Todolist.findByIdAndDelete(param.id, cb);
+    Todolist.findByIdAndDelete(param.id);
+    User.findByIdAndUpdate(param.user, {$pull: {listes: param.id}}, {'new':false}, cb);
+  },
+  createCollab: function(data,cb){
+    User.findOne({ username: data.name }).then(user=> {
+      if(user==null){
+        cb(false);
+      } else {
+        User.findByIdAndUpdate(user._id, {$push: {listes: data.list_id}}, cb(true));
+      }
+    });
   },
   createUser : function(data,cb) {
   // create a user a new user

@@ -31,6 +31,13 @@ router.post('/connectUser', function(req, res) {
   });
 });
 
+router.post('/collabList', function(req, res) {
+  data = req.body;
+  dataLayer.createCollab(data,function(result){
+    res.send(result);
+  });
+});
+
 router.get('/:id', function(req, res) {
   param = req.params;
   dataLayer.getMySpace(param,function(result){

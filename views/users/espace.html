@@ -12,7 +12,10 @@
 <body ng-controller="mainController" style="margin:50;padding:5">
   <center>
   <hr>
-  <h3>Bienvenue sur ton espace {{user.username}} !</h3>
+  <div class="row">
+    <div class="col-sm"><h3>Bienvenue sur ton espace {{user.username}} !</h3></div>
+    <div class="col-sm"><button type="submit" id="deconnexion" class="btn btn-warning" onclick="window.location.replace('/');">Déconnexion</button></div>
+  </div>
   <span id='id' style="display: none;">{{id}}</span>
   <hr>
   <div class="row">
@@ -42,6 +45,7 @@
       <th scope="col"> #</th>
       </tr>
     </thead>
+
   {% for l in user.listes %}
     <tr>
     <th scope="col">
@@ -54,11 +58,24 @@
     </th>
     <th scope="col">
       <button type="button" class="btn btn-success" type="submit" onclick="window.location.href='/todolists/#?list={{l._id}}'">Consulter</button>
+      <button type="submit" id="add-collab-{{loop.index}}" class="btn btn-info" ng-click="addCollab('{{l._id}}','{{user.listes.length}}')"> + collab </button>
       <button type="submit" id="delete-list" class="btn btn-danger" ng-click="deleteList('{{l._id}}')"> x </button>
     </th>
     </tr>
     {% endfor %}
   </table>
+  <table id="collab-tab" class="table table-bordered" style="display: none;">
+    <thead class="bg-secondary">
+      <tr>
+      <th scope="col"><font color='white'>Avec qui collaborer ?</font></th>
+      <th scope="col"><input type="text" class="form-control" placeholder="Son pseudo" name="name" ng-model="collabData.name"></th>
+      <th scope="col"><button type="submit" id="add-collab-{{loop.index}}" class="btn btn-primary" ng-click="createCollab()">Collaborer</button></th>
+      <th scope="col"><button type="submit" id="stop-collab" class="btn btn-danger" ng-click="fermerCollab('{{user.listes.length}}')">x</button></th>
+      </tr>
+    </thead>
+  </table>
+  <span><font id="result"></font></span>
+  </div>
   </center>
 </body>
 </html>

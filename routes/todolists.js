@@ -43,9 +43,8 @@ router.post('/api/laliste/edit/:id', function(req, res) {
     });
 });
 
-router.delete('/api/laliste/delete/:id', function(req, res) {
+router.delete('/api/laliste/delete/:user/:id', function(req, res) {
     param = req.params;
-    console.log(param);
     dataLayer.deleteList(param,function(result){
         res.send(result);
     });

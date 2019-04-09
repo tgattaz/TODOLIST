@@ -1,3 +1,4 @@
+
 /* Les imports */
 
 //Express: infrastructure pour appli web
@@ -14,9 +15,10 @@ var bodyParser = require('body-parser');
 /* Configuration */
 
 //Modèles Mongoose pour insérer les données dans MongoDB en respectant la structure défini dans les schémas
-Todolist = require('./models/Todolist');
-User = require('./models/User');
-Task = require('./models/Task');
+// WARNING ! n'existe plus car ils ont été intégré au dataLayer
+//EXEMPLE: Si je veux passer de Moogoose au Mongo Natif j'aurai juste à changer mon DataLayer.js
+//Autrement rien ne bouge d'autre dans mon application
+
 //DataLayer : Couche de données, zone de transit vers le gestionnaire de données
 var dataLayer = require('./dataLayer');
 

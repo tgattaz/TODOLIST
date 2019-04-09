@@ -41,6 +41,8 @@
     <thead class="thead-dark">
       <tr>
       <th scope="col">Nom de la liste</th>
+      <th scope="col">Créateur</th>
+      <th scope="col">Collaborateurs</th>
       <th scope="col">Description</th>
       <th scope="col"> #</th>
       </tr>
@@ -54,14 +56,38 @@
       <span style="display: none;">{{l._id}}</span>
     </th>
     <th scope="col">
+      {{l.creator.username}}
+    </th>
+    <th scope="col">
+        {% for m in l.collaboraters %}
+          {{m.username}}
+        {% endfor %}
+    </th>
+    <th scope="col">
       {{l.description}}
     </th>
     <th scope="col">
       <button type="button" class="btn btn-success" type="submit" onclick="window.location.href='/todolists/#?list={{l._id}}'">Consulter</button>
-      <button type="submit" id="add-collab-{{loop.index}}" class="btn btn-info" ng-click="addCollab('{{l._id}}','{{user.listes.length}}')"> + collab </button>
-      <button type="submit" id="delete-list" class="btn btn-danger" ng-click="deleteList('{{l._id}}')"> x </button>
+      <span ng-show="'{{user.username}}'!='{{l.creator.username}}'"><button type="button" class="btn btn-info" ng-click="jeneveuxplus('{{l._id}}')" type="submit">x</button></span>
     </th>
     </tr>
+    <tr ng-show="'{{user.username}}'=='{{l.creator.username}}'">
+        <th scope="col">
+            <span class="badge badge-info">propriétaire</span> | <span class="badge badge-light">id: {{l._id}}</span>
+        </th>
+        <th scope="col">
+          Vous-même
+        </th>
+        <th scope="col">
+            <button type="submit" id="add-collab-{{loop.index}}" class="btn btn-info" ng-click="addCollab('{{l._id}}','{{user.listes.length}}')"> + collaborateur </button>
+        </th>
+        <th scope="col">
+            <button type="submit" id="remove-collab-{{loop.index}}" class="btn btn-dark" ng-click="removeCollab('{{l._id}}','{{user.listes.length}}')"> - collaborateur </button>
+        </th>
+        <th scope="col">
+            <button type="submit" id="delete-list" class="btn btn-danger" ng-click="deleteList('{{l._id}}')"> Supprimer </button>
+        </th>
+        </tr>
     {% endfor %}
   </table>
   <table id="collab-tab" class="table table-bordered" style="display: none;">
@@ -69,11 +95,27 @@
       <tr>
       <th scope="col"><font color='white'>Avec qui collaborer ?</font></th>
       <th scope="col"><input type="text" class="form-control" placeholder="Son pseudo" name="name" ng-model="collabData.name"></th>
-      <th scope="col"><button type="submit" id="add-collab-{{loop.index}}" class="btn btn-primary" ng-click="createCollab()">Collaborer</button></th>
+      <th scope="col"><button type="submit" class="btn btn-primary" ng-click="createCollab()">Collaborer</button></th>
       <th scope="col"><button type="submit" id="stop-collab" class="btn btn-danger" ng-click="fermerCollab('{{user.listes.length}}')">x</button></th>
       </tr>
     </thead>
   </table>
+  <table id="decollab-tab" class="table table-bordered" style="display: none;">
+      <thead class="bg-secondary">
+        <tr>
+        <th scope="col"><font color='white'>Sélectionner le(s) collaborateur(s) à enlever :</font></th>
+        <th scope="col">
+            {% raw %}
+            <div ng-repeat="x in collabData.liste">
+                <div id="decollab-{{$index}}" class="badge badge-success" ng-click="chooseDecollab($index, x._id)">  <font color='white'>{{x.username}}</font>  </div>
+            </div>
+            {% endraw %}
+        </th>
+        <th scope="col"><button type="submit" class="btn btn-primary" ng-click="deleteCollab(collabData.liste.length)">Decollaborer</button></th>
+        <th scope="col"><button type="submit" id="stop-collab" class="btn btn-danger" ng-click="fermerDecollab('{{user.listes.length}}')">x</button></th>
+        </tr>
+      </thead>
+    </table>
   <span><font id="result"></font></span>
   </div>
   </center>

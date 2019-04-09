@@ -4,6 +4,7 @@ function mainController($scope, $http, $location) {
 
   $scope.listData = {};
   $scope.collabData = {};
+
   var identifiant = document.getElementById('id').innerHTML;
   var collab_list;
 
@@ -62,6 +63,7 @@ function mainController($scope, $http, $location) {
         } else {
           document.getElementById('result').color='green';
           document.getElementById('result').innerHTML="Collaboration créee avec "+$scope.collabData.name+".";
+          setTimeout(window.location.replace("/"+identifiant), 2000);
         }
       })
       .error(function(data) {
@@ -77,4 +79,57 @@ function mainController($scope, $http, $location) {
     document.getElementById('result').innerHTML="";
   };
 
+  $scope.removeCollab = function(list_id,longueur) {
+    $http.post('collab/'+list_id)
+      .success(function(result) {
+        $scope.collabData.liste=result.collaboraters;
+      })
+      .error(function(data) {
+          console.log('Error: ' + data);
+      });
+    for (pas = 1; pas <= longueur; pas++) {
+      document.getElementById("remove-collab-"+pas).disabled =true;
+    }
+    document.getElementById('decollab-tab').style.display = "block";
+    $scope.collabData.list_id=list_id;
+  };
+
+  $scope.deleteCollab = function(longueur) {
+    for(i=0; i<longueur; i++){
+      if(document.getElementById('decollab-'+i).className=="badge badge-danger"){
+        $scope.collabData.lequel = i;
+        $http.post('decollabList', $scope.collabData);
+      }
+      setTimeout(window.location.reload("/"+identifiant), 2000);
+    };
+  };
+
+  $scope.chooseDecollab = function(index, identifiant) {
+    if(document.getElementById('decollab-'+index).className=="badge badge-success"){
+      document.getElementById('decollab-'+index).className ="badge badge-danger";
+    } else {
+      document.getElementById('decollab-'+index).className ="badge badge-success";
+    }
+  };
+
+  $scope.fermerDecollab = function(longueur) {
+    for (pas = 1; pas <= longueur; pas++) {
+      document.getElementById("remove-collab-"+pas).disabled =false;
+    }
+    document.getElementById('decollab-tab').style.display = "none";
+    document.getElementById('result').innerHTML="";
+  };
+
+  $scope.jeneveuxplus = function(list_id) {
+    $http.post('jeneveuxplus/'+list_id+'/'+identifiant)
+      .success(function(result) {
+        setTimeout(window.location.reload("/"+identifiant), 2000);
+      })
+      .error(function(data) {
+          console.log('Error: ' + data);
+      });
+  };
+
 }
+
+

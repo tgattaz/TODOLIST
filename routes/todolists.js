@@ -45,8 +45,13 @@ router.post('/api/laliste/edit/:id', function(req, res) {
 
 router.delete('/api/laliste/delete/:user/:id', function(req, res) {
     param = req.params;
-    dataLayer.deleteList(param,function(result){
-        res.send(result);
+    dataLayer.collabList(param,function(result){
+        for(i=0; i<result.length; i++){
+            dataLayer.deleteCollab2(param,result[i]);
+        };
+        dataLayer.deleteList(param,function(result){
+            res.send(result);
+        });
     });
 });
 

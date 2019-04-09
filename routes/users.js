@@ -31,9 +31,23 @@ router.post('/connectUser', function(req, res) {
   });
 });
 
+router.post('/collab/:id', function(req, res) {
+  param = req.params;
+  dataLayer.getCollab(param,function(result){
+    res.send(result);
+  });
+});
+
 router.post('/collabList', function(req, res) {
   data = req.body;
   dataLayer.createCollab(data,function(result){
+    res.send(result);
+  });
+});
+
+router.post('/decollabList', function(req, res) {
+  data = req.body;
+  dataLayer.deleteCollab(data,function(result){
     res.send(result);
   });
 });
@@ -45,6 +59,12 @@ router.get('/:id', function(req, res) {
   });
 });
 
+router.post('/jeneveuxplus/:liste_id/:user_id', function(req, res) {
+  param = req.params;
+  dataLayer.jeneveuxplus(param,function(result){
+    res.send(result);
+  });
+});
 
 
 module.exports = router;

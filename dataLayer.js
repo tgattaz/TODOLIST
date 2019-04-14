@@ -236,7 +236,7 @@ var dataLayer = {
   });
   },
   getMySpace: function(param,cb) {
-    User.findById(param.id).populate({path : 'listes', populate : [{path:'creator'}, {path:'collaboraters'}]}).then(leuser => {
+    User.findById(param.id).populate({path : 'listes', populate : [{path:'creator'}, {path:'collaboraters'}, {path:'tasks'}]}).then(leuser => {
       cb(leuser)
     });
   },

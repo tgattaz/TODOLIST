@@ -1,6 +1,27 @@
 var router = require('express').Router();
 var dataLayer = require('../dataLayer');
 
+router.get('/getTaskSet', function(req, res) {
+  param = req.params;
+  if (!param.id)
+    param.id = "5cb1e43dedd4991cd46abcbd";
+  dataLayer.getList(param,function(result){
+    res.send(result);
+  });
+});
+
+router.post('/connectUser', function(req, res) {
+  data = req.body;
+  dataLayer.connectUser(data,function(user,result){
+    if (result==null){
+      res.send(user._id);
+    } else {
+      res.send(result);
+    }
+  });
+});
+
+
 router.get('/', function(req, res) {
   res.render('users/index.html');
 });
@@ -20,16 +41,7 @@ router.post('/newUser', function(req, res){
   });
 });
 
-router.post('/connectUser', function(req, res) {
-  data = req.body;
-  dataLayer.connectUser(data,function(user,result){
-    if (result==null){
-      res.send(user._id);
-    } else {
-      res.send(result);
-    }
-  });
-});
+
 
 router.post('/collab/:id', function(req, res) {
   param = req.params;
@@ -56,6 +68,13 @@ router.get('/:id', function(req, res) {
   param = req.params;
   dataLayer.getMySpace(param,function(result){
     res.render('users/espace.html', { user: result, id : param.id });
+  });
+});
+
+router.get('/mobile/:id', function(req, res) {
+  param = req.params;
+  dataLayer.getMySpace(param,function(result){
+    res.send(result);
   });
 });
 

@@ -56,14 +56,8 @@ router.delete('/api/laliste/delete/:user/:id', function(req, res) {
 });
 
 router.delete('/api/laliste/mdelete/:id', function(req, res) {
-    param = req.params;
-    dataLayer.collabList(data,function(result){
-        for(i=0; i<result.length; i++){
-            dataLayer.deleteCollab2(data,result[i]);
-        };
-        dataLayer.deleteList(data,function(result){
-            res.send(result);
-        });
+    dataLayer.deleteList(data,function(result){
+        res.send(result);
     });
 });
 

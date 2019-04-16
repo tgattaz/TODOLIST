@@ -55,6 +55,18 @@ router.delete('/api/laliste/delete/:user/:id', function(req, res) {
     });
 });
 
+router.post('/api/laliste/mdelete/', function(req, res) {
+    data = req.body;
+    dataLayer.collabList(data,function(result){
+        for(i=0; i<result.length; i++){
+            dataLayer.deleteCollab2(data,result[i]);
+        };
+        dataLayer.deleteList(data,function(result){
+            res.send(result);
+        });
+    });
+});
+
 router.post('/api/laliste/:id/:task_id', function(req, res) {
     data = req.body;
     param = req.params;

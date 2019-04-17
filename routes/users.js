@@ -64,6 +64,13 @@ router.post('/decollabList', function(req, res) {
   });
 });
 
+router.post('/decollabListmobile', function(req, res) {
+  data = req.body;
+  dataLayer.deleteCollabmobile(data,function(result){
+    res.send(result);
+  });
+});
+
 router.get('/:id', function(req, res) {
   param = req.params;
   dataLayer.getMySpace(param,function(result){
@@ -85,5 +92,11 @@ router.post('/jeneveuxplus/:liste_id/:user_id', function(req, res) {
   });
 });
 
+router.post('/veuxplus', function(req, res) {
+  data = req.body;
+  dataLayer.jeneveuxplus(data,function(result){
+    res.send(result);
+  });
+});
 
 module.exports = router;

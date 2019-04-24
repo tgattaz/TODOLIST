@@ -6,6 +6,7 @@ function mainController($scope, $http) {
   $scope.response = {};
 
   $scope.connectUser = function() {
+      console.log($scope.coData);
     $http.post('/connectUser', $scope.coData)
         .success(function(data) {
             $scope.response.text = data;

@@ -4,7 +4,7 @@ var dataLayer = require('../dataLayer');
 router.get('/getTaskSet', function(req, res) {
   param = req.params;
   if (!param.id)
-    param.id = "5cb6f06feba3f51f984609c6";
+    param.id = "5cc07a3eb47eea001719b0fa";
   dataLayer.getList(param,function(result){
     res.send(result);
   });
@@ -12,6 +12,7 @@ router.get('/getTaskSet', function(req, res) {
 
 router.post('/connectUser', function(req, res) {
   data = req.body;
+  console.log(data);
   dataLayer.connectUser(data,function(user,result){
     if (result==null){
       res.send(user._id);

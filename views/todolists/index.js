@@ -13,13 +13,11 @@ function mainController($scope, $http, $location) {
     //Identifiant de l'utilisateur via le cookie set à la connexion
 
     var cookie_username = getCookie('username');
-
+    $scope.formData = {};
     $scope.formData.creator = cookie_username;
 
 
     // Initialisation des arrays pour les formulaires
-
-    $scope.formData = {};
 
     $scope.modifyData = {};
 
